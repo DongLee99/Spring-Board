@@ -76,10 +76,9 @@ var main = {
     },
     login : function() {
         var data = {
-            id: $('#id').val(),
+            email: $('#email').val(),
             password: $('#password').val()
         };
-        var id = $('#id').val();
         $.ajax({
             type: 'POST',
             url: '/login',
@@ -87,14 +86,16 @@ var main = {
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data)
         }).done(function () {
+            alert('로그인 성공');
             window.location.href = '/';
         }).fail(function (error) {
+            alert('로그인 실패');
             alert(JSON.stringify(error));
         });
     },
     signup : function() {
         var data = {
-            id: $('#id').val(),
+            email: $('#email').val(),
             password: $('#password').val()
 
         };

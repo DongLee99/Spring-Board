@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class LoginService {
@@ -16,23 +18,24 @@ public class LoginService {
     @Transactional
     public User save(LoginJoinRequestDto requestDto) {
         return userRepository.save(requestDto.toEntitiy());
+
     }
     @Transactional
-    public Long login(LoginRequestDto requestDto) {
-        try {
-            LoginResponseDto user = findById(requestDto.toEntitiy().getEmail(),requestDto.toEntitiy().getPassword());
-            return requestDto.toEntitiy().getId();
-        } catch (IllegalArgumentException e) {
-            new IllegalArgumentException("해당 게시글이 없습니다. email = " + requestDto.toEntitiy().getEmail());
-        }
-
-        return requestDto.toEntitiy().getId();
+    public String login(LoginRequestDto requestDto) {
+        LoginResponseDto loginResponseDto = findById(requestDto.toEntitiy().getEmail(),requestDto.toEntitiy().getPassword());
+        System.out.println(loginResponseDto.getId());
+        return loginResponseDto.getEmail();
     }
 
     public LoginResponseDto findById(String email, String password){
         try {
-            User entity = userRepository.findMember(email, password);
-            return new LoginResponseDto(entity);
+            User entity = userRepository.findByEmailAndPassword(email,password);
+            if (entity != null) {
+
+                return new LoginResponseDto(entity);
+            } else {
+                throw new IllegalArgumentException("해당 아이디가 없습니다. email = " + email);
+            }
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("해당 아이디가 없습니다. email = " + email);
         }

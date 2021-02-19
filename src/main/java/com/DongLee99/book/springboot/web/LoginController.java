@@ -22,7 +22,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public Long login(@RequestBody LoginRequestDto requestDto) {
+    public String login(@RequestBody LoginRequestDto requestDto) {
         return loginService.login(requestDto);
     }
 
