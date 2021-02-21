@@ -8,12 +8,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class LoginService {
     private final UserRepository userRepository;
+    private final HttpSession httpSession;
 
     @Transactional
     public User save(LoginJoinRequestDto requestDto) {
@@ -24,6 +26,7 @@ public class LoginService {
     public String login(LoginRequestDto requestDto) {
         LoginResponseDto loginResponseDto = findById(requestDto.toEntitiy().getEmail(),requestDto.toEntitiy().getPassword());
         System.out.println(loginResponseDto.getId());
+        httpSession.setAttribute("user", loginResponseDto);
         return loginResponseDto.getEmail();
     }
 

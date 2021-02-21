@@ -12,10 +12,13 @@ public class PostsSaveRequestDto {
     private String content;
     private String author;
     @Builder
-    public PostsSaveRequestDto(String title, String content, String author){
+    public PostsSaveRequestDto(String title, String content){
         this.title = title;
         this.content = content;
-        this.author = author;
+    }
+
+    public void setAuthor(String Author) {
+        this.author = Author;
     }
     public Posts toEntitiy() {
         return Posts.builder()

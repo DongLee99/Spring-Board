@@ -2,6 +2,7 @@ package com.DongLee99.book.springboot.web;
 
 
 import com.DongLee99.book.springboot.service.PostsService;
+import com.DongLee99.book.springboot.web.dto.LoginResponseDto;
 import com.DongLee99.book.springboot.web.dto.PostsResponseDto;
 import com.DongLee99.book.springboot.web.dto.PostsSaveRequestDto;
 import com.DongLee99.book.springboot.web.dto.PostsUpdateRequestDto;
@@ -10,15 +11,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 @RequiredArgsConstructor
 @RestController
 public class PostsApiController {
 
     private final PostsService postsService;
-
+    private final HttpSession httpSession;
 
     @PostMapping("/api/v1/posts")
     public Long save(@RequestBody PostsSaveRequestDto requestDto) {
+        LoginResponseDto user = (LoginResponseDto) httpSession.getAttribute("user");
+        requestDto.setAuthor(user.getEmail());
         return postsService.save(requestDto);
     }
 

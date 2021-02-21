@@ -10,18 +10,18 @@
     <h1>스프링 부트로 게시판 만들기</h1>
     <div class = "row">
         <div class = "col-md-6">
-            <a href="/posts/save" role = "botton"
-               class="btn btn-primary">글 등록</a>
             {{#userName}}
                 Logged in as: <span id = "user">{{userName}}</span>
             <a href="/logout" class = "btn btn-info active" role="button">Logout</a>
+                <a href="/posts/save" role = "botton"
+                   class="btn btn-primary">글 등록</a>
             {{/userName}}
             {{^userName}}
+                <a href="/login" role = "botton"
+                   class="btn btn-primary">로그인</a>
+                <a href="/signup" role = "botton"
+                   class="btn btn-primary">회원가입</a>
             {{/userName}}
-            <a href="/login" role = "botton"
-               class="btn btn-primary">로그인</a>
-            <a href="/signup" role = "botton"
-               class="btn btn-primary">회원가입</a>
         </div>
     </div>
     <br>
@@ -32,7 +32,6 @@
             <th>게시글번호</th>
             <th>제목</th>
             <th>작성자</th>
-            <th>최종 수정일</th>
         </tr>
         </thead>
         <tbody id = "tbody">
@@ -41,7 +40,6 @@
                 <td>{{id}}</td>
                 <td><a href = "/posts/update/{{id}}">{{title}}</a></td>
                 <td>{{author}}</td>
-                <td>{{modifiedDate}}</td>
             </tr>
         {{/posts}}
         </tbody>

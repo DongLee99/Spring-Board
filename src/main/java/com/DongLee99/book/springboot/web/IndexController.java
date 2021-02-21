@@ -1,6 +1,8 @@
 package com.DongLee99.book.springboot.web;
 
+import com.DongLee99.book.springboot.domain.posts.PostsRepository;
 import com.DongLee99.book.springboot.service.PostsService;
+import com.DongLee99.book.springboot.web.dto.LoginResponseDto;
 import com.DongLee99.book.springboot.web.dto.PostsResponseDto;
 import com.DongLee99.book.springboot.web.dto.PostsSaveRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -16,14 +18,15 @@ import javax.servlet.http.HttpSession;
 public class IndexController {
 
     private final PostsService postsService;
+    private final PostsRepository postsRepository;
     private final HttpSession httpSession;
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("posts", postsService.findAllDesc());
-
-        /*if (user != null) {
-            model.addAttribute("userName", user.getName());
-        }*/
+        model.addAttribute("posts", postsRepository.findAll());
+        LoginResponseDto user = (LoginResponseDto) httpSession.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("userName", user.getEmail());
+        }
         return "index";
     }
     @GetMapping("/posts/save")
@@ -41,6 +44,12 @@ public class IndexController {
         return "signup";
     }
 
+    @GetMapping("/logout")
+    public String logout(Model model) {
+        httpSession.invalidate();
+        model.addAttribute("posts", postsRepository.findAll());
+        return "index";
+    }
 
     @GetMapping("/posts/update/{id}")
     public String postsUpdate(@PathVariable Long id, Model model){
