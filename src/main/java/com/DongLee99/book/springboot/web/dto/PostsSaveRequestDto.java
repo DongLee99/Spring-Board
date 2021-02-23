@@ -1,6 +1,7 @@
 package com.DongLee99.book.springboot.web.dto;
 
 import com.DongLee99.book.springboot.domain.posts.Posts;
+import com.DongLee99.book.springboot.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class PostsSaveRequestDto {
+    private User writer;
     private String title;
     private String content;
     private String author;
@@ -22,6 +24,7 @@ public class PostsSaveRequestDto {
     }
     public Posts toEntitiy() {
         return Posts.builder()
+                .writer(writer)
                 .title(title)
                 .content(content)
                 .author(author)

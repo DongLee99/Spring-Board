@@ -32,16 +32,31 @@
             <th>게시글번호</th>
             <th>제목</th>
             <th>작성자</th>
+            <th>내용</th>
         </tr>
         </thead>
         <tbody id = "tbody">
+        {{#userName}}
         {{#posts}}
             <tr>
                 <td>{{id}}</td>
                 <td><a href = "/posts/update/{{id}}">{{title}}</a></td>
                 <td>{{author}}</td>
+                <td>{{content}}</td>
             </tr>
         {{/posts}}
+        {{/userName}}
+        {{^userName}}
+            {{#posts}}
+                <tr>
+                    <td>{{id}}</td>
+                    <td>{{title}}</td>
+                    <td>{{author}}</td>
+                    <td>{{content}}</td>
+                </tr>
+            {{/posts}}
+        {{/userName}}
+
         </tbody>
     </table>
     {{>layout/footer}}

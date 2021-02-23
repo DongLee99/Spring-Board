@@ -2,19 +2,23 @@ package com.DongLee99.book.springboot.domain.posts;
 
 
 import com.DongLee99.book.springboot.domain.BaseTimeEntity;
+import com.DongLee99.book.springboot.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
 @Entity
+@DynamicUpdate
 public class Posts extends BaseTimeEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
+    private User writer;
 
     @Column(length = 500, nullable = false)
     private String title;
@@ -25,7 +29,8 @@ public class Posts extends BaseTimeEntity {
     private String author;
 
     @Builder
-    public Posts(String title, String content, String author){
+    public Posts(User writer, String title, String content, String author){
+        this.writer = writer;
         this.title = title;
         this.content= content;
         this.author = author;
