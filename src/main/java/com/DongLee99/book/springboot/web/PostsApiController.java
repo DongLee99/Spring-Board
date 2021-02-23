@@ -1,6 +1,7 @@
 package com.DongLee99.book.springboot.web;
 
 
+import com.DongLee99.book.springboot.domain.user.User;
 import com.DongLee99.book.springboot.service.PostsService;
 import com.DongLee99.book.springboot.web.dto.LoginResponseDto;
 import com.DongLee99.book.springboot.web.dto.PostsResponseDto;
@@ -24,7 +25,7 @@ public class PostsApiController {
     public Long save(@RequestBody PostsSaveRequestDto requestDto) {
         LoginResponseDto user = (LoginResponseDto) httpSession.getAttribute("user");
         requestDto.setAuthor(user.getEmail());
-        return postsService.save(requestDto);
+        return postsService.save(requestDto,user);
     }
 
     @PutMapping("/api/v1/posts/{id}")

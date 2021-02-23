@@ -1,27 +1,33 @@
 package com.DongLee99.book.springboot.service;
 
+import com.DongLee99.book.springboot.domain.UserRepository;
 import com.DongLee99.book.springboot.domain.posts.Posts;
 import com.DongLee99.book.springboot.domain.posts.PostsRepository;
-import com.DongLee99.book.springboot.web.dto.PostsListResponseDto;
-import com.DongLee99.book.springboot.web.dto.PostsResponseDto;
-import com.DongLee99.book.springboot.web.dto.PostsSaveRequestDto;
-import com.DongLee99.book.springboot.web.dto.PostsUpdateRequestDto;
+import com.DongLee99.book.springboot.domain.user.User;
+import com.DongLee99.book.springboot.web.dto.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.servlet.http.HttpSession;
+import java.io.Writer;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class PostsService {
     private final PostsRepository postsRepository;
+    private final UserRepository userRepository;
+    private final HttpSession httpSession;
 
     @Transactional
-    public Long save(PostsSaveRequestDto requestDto) {
-        return postsRepository.save(requestDto.toEntitiy()).getId();
+    public Long save(PostsSaveRequestDto requestDto,LoginResponseDto user ) {
+        User writer = userRepository.findByEmail(user.getEmail());
+        return postsRepository.save(requestDto.toEntitiy(writer)).getId();
     }
 
     @Transactional

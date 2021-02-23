@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class PostsSaveRequestDto {
-    private User writer;
     private String title;
     private String content;
     private String author;
@@ -22,7 +21,7 @@ public class PostsSaveRequestDto {
     public void setAuthor(String Author) {
         this.author = Author;
     }
-    public Posts toEntitiy() {
+    public Posts toEntitiy(User writer) {
         return Posts.builder()
                 .writer(writer)
                 .title(title)
@@ -30,4 +29,6 @@ public class PostsSaveRequestDto {
                 .author(author)
                 .build();
     }
+
+
 }
