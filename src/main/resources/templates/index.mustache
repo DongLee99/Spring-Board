@@ -44,7 +44,11 @@
                 <td><a href = "/posts/update/{{id}}">{{title}}</a></td>
                 <td>{{author}}</td>
                 <td>{{content}}</td>
-                <td><button class="w3-button w3-black w3-round" id="rec_update">
+                <td> <form>
+                    <input type="hidden" class = "form-control" id="userid" value={{author}}>
+                    <input type="hidden" class = "form-control" id="postid" value={{id}}>
+                </form>
+                    <button class="w3-button w3-black w3-round" id="rec_update">
                     <i class="fa fa-heart" style="font-size:16px;color:#ff0000"></i>
                     &nbsp;<span class="rec_count"></span>
                 </button>
@@ -60,7 +64,7 @@
                     <td>{{author}}</td>
                     <td>{{content}}</td>
                     <td><div class="w3-border w3-center w3-padding"> 추천 기능은 <button type="button" id="newLogin"><b class="w3-text-blue">로그인</b></button> 후 사용 가능합니다.<br />
-                    <i class="fa fa-heart" style="font-size:16px;color:#ff0000"></i>
+                    <i class="fa-heart" style="font-size:16px;color:#ff0000"></i>
                         <span class="rec_count"></span></div></td>
                 </tr>
             {{/posts}}

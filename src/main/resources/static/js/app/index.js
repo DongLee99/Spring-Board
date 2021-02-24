@@ -16,6 +16,9 @@ var main = {
         $('#btn-signup').on('click',function(){
             _this.signup();
         });
+        $('#rec_update').on('click', function (){
+            _this.rec_update();
+        })
 
     },
     save : function (){
@@ -93,6 +96,7 @@ var main = {
         });
     },
     signup : function() {
+        alert($('#email').val());
         var data = {
             email: $('#email').val(),
             password: $('#password').val()
@@ -110,6 +114,38 @@ var main = {
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });
+    },
+    rec_update : function () {
+        var data = {
+            no: $('#posts.id').val(),
+            id: $('#userName.id').val()
+
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/RecUpdate.do',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(data)
+        }).done(function () {
+            alert('회원가입 완료.');
+        });
+    },
+    recCount : function() {
+        var data = {
+            no: $('#posts').val()
+        }
+        $.ajax({
+            url: "/RecCount.do",
+            type: "POST",
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(data)
+            }).done (function (count) {
+            $(".rec_count");
+
+        });
     }
+
 };
 main.init();
