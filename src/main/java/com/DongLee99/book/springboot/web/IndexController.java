@@ -1,5 +1,6 @@
 package com.DongLee99.book.springboot.web;
 
+import com.DongLee99.book.springboot.domain.likes.LikesRepository;
 import com.DongLee99.book.springboot.domain.posts.PostsRepository;
 import com.DongLee99.book.springboot.service.PostsService;
 import com.DongLee99.book.springboot.web.dto.LoginResponseDto;
@@ -20,10 +21,13 @@ public class IndexController {
     private final PostsService postsService;
     private final PostsRepository postsRepository;
     private final HttpSession httpSession;
+    private final LikesRepository likesRepository;
+
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("posts", postsRepository.findAll());
         LoginResponseDto user = (LoginResponseDto) httpSession.getAttribute("user");
+
         if (user != null) {
             model.addAttribute("userName", user.getEmail());
         }
